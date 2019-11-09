@@ -27,17 +27,20 @@ function send_request(url) {
         console.log("Error: URL is not provided.");
         return;
     }
-    this.hash = get_hash();
-    console.log("Hash value:", this.hash);
+    hash_val = get_hash();
+    console.log("Hash value:", hash_val);
     console.log("URL value:", this.url);
     $.ajax({
-        'url': endpoint + "/" + this.hash,
+        'url': endpoint + "/" + hash_val,
         'type': 'POST',
         'data': JSON.stringify(this.url),
         'dataType': 'json',
-        'contentType': 'application/json; charset=utf-8'
-    })
-    console.log("Done.")
+        'contentType': 'application/json; charset=utf-8',
+        'complete': function (data) {
+            window.location = "http://jalafate.com/go/#" + hash_val;
+            console.log("Done.")
+        }
+    });
 }
 
 if (window.location.hash != "") {
